@@ -5,7 +5,6 @@ text = "Captain Adam Bolitho stood by the quarterdeck rail and watched the land 
 
 text = "The ship went out to sea. the sea went in to the beach."
 
-text.
 maxlen = 20
 step = 5
 sentences = []
@@ -24,7 +23,37 @@ maxlen = 10
 start_index = 0
 sentence = text[start_index: start_index + maxlen]
     
+remove_these = ["said"
+               ,"asked"
+               ,"replied"
+               ,]
 
-while sentence[maxlen + 1] != " ":
-    maxlen = maxlen + 1
-    sentence = text[start_index: start_index + maxlen]
+    def remove_said(text):
+    for word in remove_these:
+        while text.find(word) >= 0:
+            start_index = text.find(word)
+            # print("start_index is ", start_index)
+            for i, char in enumerate(text[start_index + len(word) : len(text)]):
+                if char == "." or char == "!" or char == "?":
+                    # print("i is ", i)
+                    # print("char is ", char)
+                    end_index = i + start_index + len(word)
+                    # print("end_index is ", end_index)
+                    text = text[0 : start_index-1] + text[end_index : len(text)]
+                    # print("text is ", text)
+                    break
+    return text
+
+def preprocess(text):
+    print("Preprocessing text. This may take a few minutes...")
+    # for char in text:
+    #     print(char)
+    _quotes = False
+
+    for sent in doc.sents:
+        print("Original text: ", sent.text)
+        sent.text,_quotes = remove_quotes(sent.text, _quotes)
+        print("Processed text: ", )
+        print("Quotes will continue from this text?", _quotes)
+        o2 = remove_said(doc.sents[sent])
+        print("Final processed text: ", o2)
