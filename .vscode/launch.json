@@ -39,7 +39,8 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "externalTerminal"
+            "console": "externalTerminal",
+            "debugOptions": ["Sudo"]
         },
         {
             "name": "Python: Django",
