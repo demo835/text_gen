@@ -12,18 +12,22 @@ def make_passes():
 
     output_file = open("./processed.txt", mode='r+', encoding='utf-8')
 
+    # text document cannot start halfway through a quote
+    quotes = False
+    incrementer = 40
     start_index = 0
-    end_index = 5000
+    end_index = incrementer
     num_passes = 0
     while num_passes < 100:
-        text = open(u"./source-gaunt-unprepared.txt", encoding="utf8", errors='ignore').read()[start_index:end_index]
+        text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:end_index]
         if text == '': # input file is empty
             break
         text = fix_unicode(text)
         # output_file.read()[end_index - 1:end_index - 1]
-        output_file.write(preprocess(text, nlp))
-        start_index += 5000
-        end_index += 5000
+        text, quotes = preprocess(text, quotes, nlp)
+        output_file.write(text)
+        start_index += incrementer
+        end_index += incrementer
         num_passes += 1
 
 def fix_unicode(text):
@@ -49,7 +53,7 @@ def remove_dialogue(text, quotes_continue):
             elif rest_of_text[0] == '\n':
                 return "", False # end of a quote that started earlier
             else:
-                return "", True
+                return "", True # quote opens but does not close
         except IndexError:
             return "", False
     else:
@@ -66,28 +70,30 @@ def remove_newline(text):
         return text
     
 
-def preprocess(text, nlp):
+def preprocess(text, quotes, nlp):
     doc = nlp(text)
 
     temp_doc_holder = nlp("")
-    _quotes = False
 
     for sent in doc.sents:
-        processed_sent, _quotes = remove_dialogue(sent.text, _quotes)
+        processed_sent, quotes = remove_dialogue(sent.text, quotes)
         if processed_sent == "":
             continue
         else:
+            if text[len(text) - 1] == ' ':
+                processed_sent = processed_sent + ' '
             processing_doc = nlp(temp_doc_holder.text + " " + remove_newline(processed_sent))
             temp_doc_holder = processing_doc
     
-    # open("./output.txt", mode='a', encoding='utf-8').write(processing_doc.text)
     if processed_sent == "":
-        processing_doc = nlp("")
-        return processing_doc.text
+        processing_doc = nlp("") 
+        return processing_doc.text, quotes # text at beginning of read contained a quote
     elif processing_doc.text[0:2] == '  ':
-        return processing_doc.text[1:]
+        return processing_doc.text[1:], quotes # text starts with a space
+    # elif processing_doc.text[0:1] == ' ':
+    #     return processing_doc.text, quotes
     else:
-        return processing_doc.text.lstrip(' ')
+        return processing_doc.text.lstrip(' '), quotes # no dialogue, no leading space
 
 make_passes()
 elapsed_time = time.time() - start_time
