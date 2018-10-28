@@ -13,36 +13,40 @@ def make_passes():
     output_file = open("./processed.txt", mode='r+', encoding='utf-8')
 
     # text document cannot start halfway through a quote
-    quotes = False
+    quotes_continue = False
     incrementer = 40
     start_index = 0
-    end_index = incrementer
     num_passes = 0
     while num_passes < 100:
-        text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:end_index]
-        if text == '': # input file is empty
-            break
+        text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:incrementer]
+        if text == '':
+            break # stop making passes over doc when text is empty
         text = fix_unicode(text)
-        # output_file.read()[end_index - 1:end_index - 1]
-        text, quotes = preprocess(text, quotes, nlp)
+        text, quotes_continue = preprocess(text, quotes_continue, nlp)
         output_file.write(text)
         start_index += incrementer
-        end_index += incrementer
+        incrementer += incrementer
         num_passes += 1
 
 def fix_unicode(text):
     # Fix unicode quotation mark confusables
-    text = text.replace(u"\u201C", "\"")
-    text = text.replace(u"\u201D", "\"")
+    text = text.replace(u"\u201C", "\"").replace(u"\u201D", "\"")
+    # text = text.replace(u"\u201D", "\"")
     return text
 
 def remove_dialogue(text, quotes_continue):
-    if quotes_continue == True and text.find('\"') == -1:
-        return "", True # part of a quote and still continues
-    elif quotes_continue == True and text[0] == '\"':
-        return "", True
-    elif quotes_continue == True:
-        return "", False
+    # if quotes_continue == True and text.find('\"') == -1:
+    #     return "", True # part of a quote and still continues
+    # elif quotes_continue == True and text[0] == '\"':
+    #     return "", True
+    # elif quotes_continue == True:
+    #     return "", False
+    
+    if quotes_continue == True:
+        if text.find('\"') == -1 or text[0] == '\"':
+            return "", True
+        else:
+            return "", False
 
     start_index = text.find('\"')
     if start_index >= 0:
@@ -70,30 +74,28 @@ def remove_newline(text):
         return text
     
 
-def preprocess(text, quotes, nlp):
+def preprocess(text, quotes_continue, nlp):
     doc = nlp(text)
 
     temp_doc_holder = nlp("")
 
     for sent in doc.sents:
-        processed_sent, quotes = remove_dialogue(sent.text, quotes)
-        if processed_sent == "":
+        sent, quotes_continue = remove_dialogue(sent.text, quotes_continue)
+        if sent == "":
             continue
-        else:
-            if text[len(text) - 1] == ' ':
-                processed_sent = processed_sent + ' '
-            processing_doc = nlp(temp_doc_holder.text + " " + remove_newline(processed_sent))
-            temp_doc_holder = processing_doc
+        # else:
+        if text[len(text) - 1] == ' ':
+            sent = sent + ' '
+        doc = nlp(temp_doc_holder.text + " " + remove_newline(sent))
+        temp_doc_holder = doc
     
-    if processed_sent == "":
-        processing_doc = nlp("") 
-        return processing_doc.text, quotes # text at beginning of read contained a quote
-    elif processing_doc.text[0:2] == '  ':
-        return processing_doc.text[1:], quotes # text starts with a space
-    # elif processing_doc.text[0:1] == ' ':
-    #     return processing_doc.text, quotes
+    # if processed_sent == "" and not processing_doc:
+    #     processing_doc = nlp("") 
+    #     return processing_doc.text, quotes # text at beginning of read contained a quote
+    if doc.text[0:2] == '  ':
+        return doc.text[1:], quotes_continue # text starts with a space
     else:
-        return processing_doc.text.lstrip(' '), quotes # no dialogue, no leading space
+        return doc.text.lstrip(' '), quotes_continue # no dialogue, no leading space
 
 make_passes()
 elapsed_time = time.time() - start_time
