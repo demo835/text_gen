@@ -16,18 +16,21 @@ def make_passes():
     quotes_continue = False
     incrementer = 200
     start_index = 0
+    end_index = incrementer
     num_passes = 0
-    while num_passes < 500:
-        text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:incrementer]
-        incrementer = text.rfind(".") + 1
-        text = text[0:incrementer]
+    while num_passes < 200:
+        text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:end_index]
+        clip_index = text.rfind(".") + 1
+        start_index = start_index + clip_index
+        end_index = start_index
+        text = text[0:clip_index]
         if text == '':
             break # stop making passes over doc when text is empty
         text = fix_unicode(text)
         text, quotes_continue = preprocess(text, quotes_continue, nlp)
         output_file.write(text)
-        start_index += incrementer
-        incrementer += incrementer
+        # start_index += incrementer
+        end_index += incrementer
         num_passes += 1
         print("We've made ", num_passes, " passes", end='\r')
 
@@ -94,7 +97,8 @@ def preprocess(text, quotes_continue, nlp):
     if doc.text[0:2] == '  ':
         return temp_doc_holder.text[1:], quotes_continue # text starts with a space
     else:
-        return temp_doc_holder.text.lstrip(' '), quotes_continue # no dialogue, no leading space
+        # return temp_doc_holder.text.lstrip(' '), quotes_continue # no dialogue, no leading space
+        return temp_doc_holder.text, quotes_continue
 
 make_passes()
 elapsed_time = time.time() - start_time

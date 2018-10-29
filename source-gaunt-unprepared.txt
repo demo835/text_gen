@@ -14625,8 +14625,6 @@ holy river. The ancient stones of the Indehar Sholaan Sabbat Bridge were hurled 
 air. The Pardus armour ploughed on, directed by Colonel Furst and Major Kleopas. They were one of the best armour
 units in this segmentum.
 Old Town, and everything and everyone in it, didn’t stand a chance.
-FOUR
-THE COLONEL AT BAY
 “Lay a fire within your soul and another between your hands, and let both be your weapons.
 “For one is faith and the other is victory and neither may ever be put out.”
 —Saint Sabbat, lessons
@@ -20580,7 +20578,7 @@ with devotion, ability, obedience and humility. You have personally known the ph
 “High lord of all, it has been my duty and my duty only.”
 The sezar clapped him gently on the arm. “You’ve earned this, Golke. This — and my other gift.”
 “Sir?”
-“As of midnight tonight, you are honourably relieved of supreme command. Your toil is done.”
+“As of midnight tonight, you are honorably relieved of supreme command. Your toil is done.”
 “Relieved of command…? My lord, why? Have I displeased you?”
 The sezar laughed, loudly. It was forced, Golke could sense.
 “Not one bit. But with the arrival of the Imperials, I am forced to make changes in the command structure. Radical
