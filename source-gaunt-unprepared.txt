@@ -13,7 +13,7 @@ amongst his soldiers are the Adeptus Astartes, the Space Marines, bio-engineered
 arms are legion: the Imperial Guard and countless planetary defence forces, the ever-vigilant Inquisition and the
 tech-priests of the Adeptus Mechanicus to name only a few. But for all their multitudes, they are barely enough to
 hold off the ever-present threat from aliens, heretics, mutants - and worse.
-TO BE A man in such times is to be one amongst untold billions. It is to live in the cruellest and most bloody
+To be a man in such times is to be one amongst untold billions. It is to live in the cruellest and most bloody
 regime imaginable. These are the tales of those times. Forget the power of technology and science, for so much has
 been forgotten, never to be re-learned. Forget the promise of progress and understanding, for in the grim dark future
 there is only war. There is no peace amongst the stars, only an eternity of carnage and slaughter, and the laughter of
@@ -72,8 +72,6 @@ Gaunt cursed quietly, wiped his brow. It was days like this, in the slow, loaded
 combat, that the memories flooded back at their most intense. Of the past, of lost comrades and missed friends, of
 glories and defeats long gone, of ends.
 And of beginnings…
-ONE
-GHOSTMAKER
 Fire, like a flower. Blossoming. Pale, greenish fire, scuttling like it was alive. Eating the world, the whole
 world…
 Opening his eyes, Ibram Gaunt, Imperial Commissar, gazed into his own lean, pale face. Trees, as dark green as an

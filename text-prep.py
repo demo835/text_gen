@@ -14,11 +14,11 @@ def make_passes():
 
     # text document cannot start halfway through a quote
     quotes_continue = False
-    incrementer = 200
+    incrementer = 500
     start_index = 0
     end_index = incrementer
     num_passes = 0
-    while num_passes < 200:
+    while num_passes < 500:
         text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:end_index]
         clip_index = text.rfind(".") + 1
         start_index = start_index + clip_index
@@ -64,7 +64,10 @@ def remove_dialogue(text, quotes_continue):
             else:
                 return "", True # quote opens but does not close
         except IndexError:
-            return "", False
+            if text[len(text) - 2 : len(text)] == ' \"':
+                return "", True
+            else:
+                return "", False
     else:
         return text, False
 
@@ -85,6 +88,9 @@ def preprocess(text, quotes_continue, nlp):
     temp_doc_holder = nlp("")
 
     for sent in doc.sents:
+        if sent.text[len(sent.text) - 2 : len(sent.text)] == '\"\n':
+            quotes_continue = not quotes_continue
+            continue
         sent, quotes_continue = remove_dialogue(sent.text, quotes_continue)
         if sent == "":
             continue
