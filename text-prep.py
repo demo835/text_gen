@@ -14,11 +14,13 @@ def make_passes():
 
     # text document cannot start halfway through a quote
     quotes_continue = False
-    incrementer = 40
+    incrementer = 200
     start_index = 0
     num_passes = 0
-    while num_passes < 100:
+    while num_passes < 500:
         text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:incrementer]
+        incrementer = text.rfind(".") + 1
+        text = text[0:incrementer]
         if text == '':
             break # stop making passes over doc when text is empty
         text = fix_unicode(text)
@@ -27,11 +29,11 @@ def make_passes():
         start_index += incrementer
         incrementer += incrementer
         num_passes += 1
+        print("We've made ", num_passes, " passes", end='\r')
 
 def fix_unicode(text):
     # Fix unicode quotation mark confusables
     text = text.replace(u"\u201C", "\"").replace(u"\u201D", "\"")
-    # text = text.replace(u"\u201D", "\"")
     return text
 
 def remove_dialogue(text, quotes_continue):
@@ -67,7 +69,7 @@ def remove_newline(text):
     start_index = text.find('\n')
     if start_index >= 0:
         if text[start_index + -1] != "." and text[start_index + -1] != "?" and text[start_index + -1] != "!":
-            return text.replace('\n', ' ')
+            return text.replace('\n', ' ') # fix the rare middle-of-sentence newlines
         else:
             return text.replace('\n', '')
     else:
@@ -86,19 +88,19 @@ def preprocess(text, quotes_continue, nlp):
         # else:
         if text[len(text) - 1] == ' ':
             sent = sent + ' '
-        doc = nlp(temp_doc_holder.text + " " + remove_newline(sent))
-        temp_doc_holder = doc
+        temp_doc_holder = nlp(temp_doc_holder.text + " " + remove_newline(sent))
+        # temp_doc_holder = doc
     
-    # if processed_sent == "" and not processing_doc:
-    #     processing_doc = nlp("") 
-    #     return processing_doc.text, quotes # text at beginning of read contained a quote
     if doc.text[0:2] == '  ':
-        return doc.text[1:], quotes_continue # text starts with a space
+        return temp_doc_holder.text[1:], quotes_continue # text starts with a space
     else:
-        return doc.text.lstrip(' '), quotes_continue # no dialogue, no leading space
+        return temp_doc_holder.text.lstrip(' '), quotes_continue # no dialogue, no leading space
 
 make_passes()
 elapsed_time = time.time() - start_time
-print("Elapsed Time: ", round(elapsed_time, 3), "s")
+print("\nElapsed Time: ", round(elapsed_time, 3), "s")
 
 # doc.ents = [Span(doc, 0, 1, label=doc.vocab.strings[u'ORG'])]
+
+# KNOWN BUGS:
+# Dialogue at beginning of file. Especially if text starts with an open quote

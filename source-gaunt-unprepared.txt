@@ -25143,7 +25143,7 @@ mission. He wanted to trust the ministrations of the Alliance surgeons, many of 
 their medical practices seemed so terribly outmoded. He took careful note of the treatment deficiencies he saw, and
 hoped there would be an opportunity for him to advise the sector’s chief of medicine on better, less barbarous
 techniques. At least three troopers he saved that afternoon were dying as a direct result of treatment rather than gas.
-A terrible stench of chemical bums and corrupted blood filled the infirmary. Frothy, discoloured waste matter
+A terrible stench of chemical bums and corrupted blood filled the infirmary. Frothy, discolored waste matter
 wept in lakes across the stone floor. Corpsmen turned on the roof vents and hosed with disinfectant but it didn’t do
 much good.
 “Feth!” muttered Rawne. “The smell is going to choke me to death!”
@@ -36607,7 +36607,7 @@ Then he stepped out into their path and held up a hand. “Shit!” said Jagdea.
 Four more Blood Pact troopers and a slaver with a team of hate-dogs
 approached behind the officer. He walked towards the hauler.
 “We’re blown,” announced Bonin.
-“I know!” said Varl. “Wait to the last possible moment…”
+“I know!” said Varl. “Wait to the last possible moment...”
 The officer stepped up to the cab and peered in. They could smell his body
 odour and see his blood-shot eyes through the slits of his iron mask. He
 began to ask something in a language they didn’t understand and then stopped
