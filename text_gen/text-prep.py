@@ -10,7 +10,7 @@ def make_passes():
 
     nlp = spacy.load('en_core_web_sm')
 
-    output_file = open("./processed.txt", mode='r+', encoding='utf-8')
+    output_file = open(u"./source-gaunt.txt", mode='r+', encoding='utf-8')
 
     # text document cannot start halfway through a quote
     quotes_continue = False
@@ -19,7 +19,7 @@ def make_passes():
     end_index = incrementer
     num_passes = 0
     while num_passes < 600:
-        text = open(u"./source-gaunt-unprepared.txt", encoding="utf8", errors='ignore').read()[start_index:end_index]
+        text = open(u"./input.txt", encoding="utf8", errors='ignore').read()[start_index:end_index]
         clip_index = text.rfind(".") + 1
         start_index = start_index + clip_index
         end_index = start_index
@@ -31,7 +31,7 @@ def make_passes():
         output_file.write(text)
         end_index += incrementer
         num_passes += 1
-        print("We've made ", num_passes, " passes", end='\r')
+        # print("We've made ", num_passes, " passes", end='\r')
 
 def fix_unicode(text):
     # Fix unicode quotation mark confusables
@@ -75,7 +75,7 @@ def remove_dialogue(text, quotes_continue):
     
 def remove_newline(text):
     while text.find('\n') >= 0:
-        text.replace('\n', ' ')
+        text = text.replace('\n', ' ')
     return text
 
 def preprocess(text, quotes_continue, nlp):
