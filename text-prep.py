@@ -1,4 +1,5 @@
 import time
+import logging
 
 import spacy
 
@@ -10,7 +11,7 @@ def make_passes():
 
     nlp = spacy.load('en_core_web_sm')
 
-    output_file = open("./processed.txt", mode='r+', encoding='utf-8')
+    output_file = open("./processed.txt", mode='w', encoding='utf-8')
 
     # text document cannot start halfway through a quote
     quotes_continue = False
@@ -31,7 +32,8 @@ def make_passes():
         output_file.write(text)
         end_index += incrementer
         num_passes += 1
-        print("We've made ", num_passes, " passes", end='\r')
+        logging.debug("We've made " + str(num_passes) + " passes")
+        # print("We've made ", num_passes, " passes", end='\r')
 
 def fix_unicode(text):
     # Fix unicode quotation mark confusables
@@ -92,17 +94,9 @@ def preprocess(text, quotes_continue, nlp):
     doc = nlp(remove_newline(text.lower()))
 
     temp_doc_holder = nlp("")
-    # temp_word = ""
 
     # for sent in doc.sents:
-    #     doc = nlp(remove_newline(sent.text.lower()))
-
-    # for word in doc:
-    #     temp_word.append(word.text.lower())
-    #     print(temp_word)
-
-    for sent in doc.sents:
-        print(sent)
+    #     print(sent)
 
     for sent in doc.sents:
         sent, quotes_continue = remove_dialogue(sent.text, quotes_continue)
@@ -119,6 +113,17 @@ def preprocess(text, quotes_continue, nlp):
     else:
         return temp_doc_holder.text, quotes_continue
 
-make_passes()
+def startup():
+    print('Would you like to run in verbose mode? y/n')
+    i = str(input())
+    if i == 'y':
+        verbose = True
+        logging.basicConfig(level=logging.DEBUG, format='%(levelname)s - %(message)s')
+    else:
+        verbose = False
+        logging.disable(logging.CRITICAL)
+    make_passes()
+
+startup()
 elapsed_time = time.time() - start_time
 print("\nElapsed Time: ", round(elapsed_time, 3), "s")

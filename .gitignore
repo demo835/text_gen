@@ -1,4 +1,7 @@
-./env
-./vscode
+./.vscode
 ./.env
+./Backup
+./env
+./models
 ./text_gen
+
