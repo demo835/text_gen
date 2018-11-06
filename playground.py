@@ -1,3 +1,13 @@
+# Other unicode confusable - apostrophe
+# 'RIGHT SINGLE QUOTATION MARK' (U+2019)
+# Should be:
+# 'APOSTROPHE' (U+0027)
+
+# doc.ents = [Span(doc, 0, 1, label=doc.vocab.strings[u'ORG'])]
+
+# KNOWN BUGS:
+# Dialogue at beginning of file. Especially if text starts with an open quote
+
 input_file = open('input.txt')
 output_file = open('output.txt', 'a')
 
