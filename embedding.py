@@ -6,26 +6,33 @@ import gensim
 from gensim import corpora, models, similarities
 from gensim.test.utils import common_corpus, common_dictionary
 from gensim.models import Word2Vec
+from spacy.lemmatizer import Lemmatizer
+from spacy.lemmatizer import Lemmatizer
+from spacy.lang.en import LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
+lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
+lemmas = lemmatizer(u'worked', u'VERB')
+assert lemmas == [u'duck']
 
 # from gensim import corpora, models, similiarities
 
 startup()
 
-t = open(u"input.txt", mode='r').read()
-logging.debug("Length of text is :", len(t))
+# t = open(u"input.txt", mode='r').read()
+# logging.debug("Length of text is :", len(t))
 
-nlp = spacy.load('en_core_web_lg')
-nlp.max_length = 2000000
+# nlp = spacy.load('en_core_web_lg')
+# nlp.max_length = 2000000
 
-doc = nlp(t.lower())
+# doc = nlp(t.lower())
 
-tok_corp = []
-for word in doc:
-    tok_corp.append([word.text])
+# tok_corp = []
+# for word in doc:
+#     tok_corp.append([word.text])
 
 # print(tok_corp)
 
-
+lemma = Lemmatizer(u"worked")
+print(lemma)
 
 # dictionary = corpora.Dictionary(tok_corp)
 # print(tok_corp)
@@ -46,7 +53,7 @@ for word in doc:
 model = Word2Vec(tok_corp, size = 64, sg = 1, window = 3)
 model.save("first.model")
 
-print(model.wv.most_similar('gaunt'))
+print(model.wv.most_similar('heart'))
 
 
 # model = gensim.models.Word2Vec.load("./first.model")
