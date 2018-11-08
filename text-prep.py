@@ -9,7 +9,7 @@ def make_passes():
 
     print("Preprocessing the document. This may take several minutes...")
 
-    nlp = spacy.load('en_core_web_sm')
+    nlp = spacy.load('en_core_web_lg')
 
     output_file = open("./processed.txt", mode='w', encoding='utf-8')
 
@@ -122,8 +122,9 @@ def startup():
     else:
         verbose = False
         logging.disable(logging.CRITICAL)
-    make_passes()
+    
 
 startup()
+make_passes()
 elapsed_time = time.time() - start_time
 print("\nElapsed Time: ", round(elapsed_time, 3), "s")
