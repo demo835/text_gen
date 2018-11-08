@@ -2,6 +2,6 @@
 ./.env
 ./Backup
 ./env
-./models
+/models
 ./text_gen
 
